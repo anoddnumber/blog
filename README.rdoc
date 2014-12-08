@@ -7,3 +7,5 @@ sqlite3 v3.8.4.3
 Rails v4.1.8
 
 Using previous versions may still work but have not been tested.
+
+Use bin/rake db:migrate to create the appropriate database tables.
