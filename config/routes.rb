@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'games/index'
+  get 'games/snake'
+  get 'games/tap'
   # get 'welcome/index'
   
   resources :articles do
