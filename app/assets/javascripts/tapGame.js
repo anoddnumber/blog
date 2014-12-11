@@ -14,14 +14,41 @@ var startTapGame = function(){
 	var cw = w/numCols; //cell width
 	var ch = h/numRows; //cell height
 	var score;
+	var isInGame = false;
 	
+	function newGame() {
+        if (isInGame) {
+            return;
+        } else {
+            isInGame = true;
+            init();
+        }
+    }
+    
+    function endGame() {
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(0, 0, w, h);
+        
+        //Lets paint the score
+        ctx.font="30px Verdana";
+        ctx.fillStyle = "black";
+        var score_text = "Score: " + score;
+        ctx.fillText(score_text, w/3, h/3);
+        ctx.fillText("Please click to start a new game", w/4, h/2);
+        
+        isInGame = false;
+    }
+    
 	function init()
 	{
 		score = 0;
 		createRows();
-		paint();
+		update();
 	}
-	init();
+	newGame();
+	canvas.addEventListener("mousedown", newGame);
 	
 	function createRows() 
 	{
@@ -36,7 +63,7 @@ var startTapGame = function(){
         return {safe:safeSquare};
 	}
 	
-	function paint()
+	function update()
 	{
 		ctx.fillStyle = "white";
 		ctx.fillRect(0, 0, w, h);
@@ -51,10 +78,7 @@ var startTapGame = function(){
 		        }
 		    }
 		}
-		//Lets paint the score
-        var score_text = "Score: " + score;
-        ctx.fillStyle = "yellow";
-        ctx.fillText(score_text, 5, h-5);
+        document.getElementById("score").innerHTML = "Score: " + score;
 	}
 	
 	
@@ -74,16 +98,21 @@ var startTapGame = function(){
 	        score++;
 	        rows.pop();
 	        rows.unshift(createRow());
-	        paint();
+	        update();
 	    } else {
 	        console.log("not safe");
-	        init();
+	        // init();
+	        endGame();
 	        return;
 	    }
 	}
 	
 	//Lets add the keyboard controls now
 	$(document).keydown(function(e){
+	    if ( ! isInGame) {
+	        return;
+	    }
+	    
 		var key = e.which;
 		var col = -1;
 		switch(key) {
@@ -94,7 +123,7 @@ var startTapGame = function(){
 		    case "J".charCodeAt(0): col = 4; break;
 		    case "K".charCodeAt(0): col = 5; break;
 		    case "L".charCodeAt(0): col = 6; break;
-		    case 186: col = 7; break; //for ";"
+		    case 186: col = 7; break; //186 is the code for ";"
 		}
 		if (col >= 0) {
 		    move(col);
@@ -105,7 +134,6 @@ var startTapGame = function(){
 var ready = function() {
 	if ($('body').hasClass('tap_game')) {
 		startTapGame();
-		console.log('tap game');
 	}
 };
 
