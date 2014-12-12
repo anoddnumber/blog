@@ -15,6 +15,7 @@ var startTapGame = function(){
 	var ch = h/numRows; //cell height
 	var score;
 	var isInGame = false;
+	var audio = new Audio('/assets/gunShot.mp3');
 	
 	function newGame() {
         if (isInGame) {
@@ -94,13 +95,12 @@ var startTapGame = function(){
 	function move(col) {
 	    var nextRow = rows[rows.length - 1];
 	    if (nextRow.safe == col) {
-	        console.log("safe!");
 	        score++;
 	        rows.pop();
 	        rows.unshift(createRow());
+	        audio.play();
 	        update();
 	    } else {
-	        console.log("not safe");
 	        // init();
 	        endGame();
 	        return;
