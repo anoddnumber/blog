@@ -109,20 +109,23 @@ var startTapGame = function(){
 	
 	//Lets add the keyboard controls now
 	$(document).keydown(function(e){
+	    var key = e.which;
 	    if ( ! isInGame) {
+	        switch(key) {
+	            case " ".charCodeAt(0): newGame(); break;
+	        }
+	        
 	        return;
 	    }
-	    
-		var key = e.which;
 		var col = -1;
 		switch(key) {
-		    case "A".charCodeAt(0): col = 0; break;
-		    case "S".charCodeAt(0): col = 1; break;
-		    case "D".charCodeAt(0): col = 2; break;
-		    case "F".charCodeAt(0): col = 3; break;
-		    case "J".charCodeAt(0): col = 4; break;
-		    case "K".charCodeAt(0): col = 5; break;
-		    case "L".charCodeAt(0): col = 6; break;
+		    // case "A".charCodeAt(0): col = 0; break;
+		    // case "S".charCodeAt(0): col = 1; break;
+		    case "D".charCodeAt(0): col = 0; break;
+		    case "F".charCodeAt(0): col = 1; break;
+		    case "J".charCodeAt(0): col = 2; break;
+		    case "K".charCodeAt(0): col = 3; break;
+		    // case "L".charCodeAt(0): col = 6; break;
 		    case 186: col = 7; break; //186 is the code for ";"
 		}
 		if (col >= 0) {
