@@ -58,11 +58,9 @@ var startTapGame = function(){
 	}
 	
 	function updateTime() {
-	    console.log("before");
 	    if (startTime < 0) return;
 	    var curTime = new Date().getTime();
 	    timePassed = curTime - startTime;
-	    console.log("hi");
 	    document.getElementById("timer").innerHTML = "Time: " + timePassed/1000 + " seconds";
 	}
 	
@@ -176,4 +174,3 @@ var ready = function() {
 
 $(document).ready(ready);
 $(document).on('page:load', ready);
-
