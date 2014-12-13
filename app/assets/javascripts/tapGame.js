@@ -48,7 +48,21 @@ var startTapGame = function(){
 		createRows();
 		update();
 	}
-	newGame();
+	
+	function menu() {
+	    ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(0, 0, w, h);
+        
+        //later, the menu will contain different options to play in different modes.
+        ctx.font="30px Verdana";
+        ctx.fillStyle = "black";
+        ctx.fillText("Please click to start a new game", w/4, h/2);
+        
+        isInGame = false;
+	}
+	menu();
 	canvas.addEventListener("mousedown", newGame);
 	
 	function createRows() 
