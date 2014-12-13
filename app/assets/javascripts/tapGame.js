@@ -16,6 +16,9 @@ var startTapGame = function(){
 	var score;
 	var isInGame = false;
 	var audio = new Audio('/assets/gunShot.mp3');
+	var timer;
+	var startTime = -1;
+	var timePassed; //in milliseconds
 	
 	function newGame() {
         if (isInGame) {
@@ -27,6 +30,9 @@ var startTapGame = function(){
     }
     
     function endGame() {
+        clearInterval(timer);
+        startTime = -1;
+        
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, w, h);
         ctx.strokeStyle = "black";
@@ -37,7 +43,8 @@ var startTapGame = function(){
         ctx.fillStyle = "black";
         var score_text = "Score: " + score;
         ctx.fillText(score_text, w/3, h/3);
-        ctx.fillText("Please click to start a new game", w/4, h/2);
+        ctx.fillText("Time: " + timePassed/1000 + " seconds", w/4, h/2);
+        ctx.fillText("Please click to start a new game", w/4, h*2/3);
         
         isInGame = false;
     }
@@ -47,6 +54,16 @@ var startTapGame = function(){
 		score = 0;
 		createRows();
 		update();
+		timer = setInterval(updateTime, 10);
+	}
+	
+	function updateTime() {
+	    console.log("before");
+	    if (startTime < 0) return;
+	    var curTime = new Date().getTime();
+	    timePassed = curTime - startTime;
+	    console.log("hi");
+	    document.getElementById("timer").innerHTML = "Time: " + timePassed/1000 + " seconds";
 	}
 	
 	function menu() {
@@ -108,6 +125,9 @@ var startTapGame = function(){
 	
 	function move(col) {
 	    var nextRow = rows[rows.length - 1];
+	    if (startTime < 0) {
+	        startTime = new Date().getTime();
+	    }
 	    if (nextRow.safe == col) {
 	        score++;
 	        rows.pop();
